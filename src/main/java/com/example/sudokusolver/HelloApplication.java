@@ -4,18 +4,15 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -77,9 +74,7 @@ public class HelloApplication extends Application {
 
         Scene scene = new Scene(rootGrid);
 
-        scene.setOnKeyTyped(e -> {
-            setSquare(e);
-        });
+        scene.setOnKeyTyped(this::setSquare);
 
         stage.setScene(scene);
         stage.setTitle("Sudoku Solver");
