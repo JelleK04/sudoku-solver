@@ -13,11 +13,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.util.ArrayList;
+
 
 public class HelloApplication extends Application {
     int boardSize = 9;
@@ -108,9 +106,9 @@ public class HelloApplication extends Application {
                 newCell.setFont(Font.font("Arial", 24));
                 newCell.setAlignment(Pos.CENTER);
                 newCell.setBorder(blackBorder);
-                newCell.setOnMouseClicked(e -> {
-                    switchSelectedSquare(newCell);
-                });
+                newCell.setOnMouseClicked(e ->
+                    switchSelectedSquare(newCell)
+                );
                 boardGrid.add(newCell, x, y);
             }
         }
