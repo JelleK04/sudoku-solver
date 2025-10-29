@@ -138,10 +138,10 @@ public class HelloApplication extends Application {
             if (keyTyped == '0') {
                 selectedSquare.setText("");
                 System.out.println("input is 0");
-                sudoku.setNumber(0, selectedSquare.getX(), selectedSquare.getY());
+                sudoku.setNumber(selectedSquare.getX(), selectedSquare.getY(), 0);
             } else {
                 selectedSquare.setText(selectedSquare.getText() + keyTyped);
-                sudoku.setNumber(Integer.parseInt(selectedSquare.getText()), selectedSquare.getX(), selectedSquare.getY());
+                sudoku.setNumber(selectedSquare.getX(), selectedSquare.getY(), Integer.parseInt(selectedSquare.getText()));
             }
         }
         sudoku.print();
