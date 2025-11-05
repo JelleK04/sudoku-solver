@@ -7,12 +7,15 @@ public class Sudoku {
     private int[] numbers;
     private int regionSize;
 
-    Sudoku(int boardSize) {
+    public Sudoku(int boardSize) {
         this.boardSize = boardSize;
         this.numbers = new int[boardSize * boardSize];
         this.regionSize = (int) Math.sqrt(boardSize);
     }
 
+    public int getBoardSize() {
+        return this.boardSize;
+    }
     public void setNumber(int x, int y, int input) {
         numbers[x + y * this.boardSize] = input;
     }
