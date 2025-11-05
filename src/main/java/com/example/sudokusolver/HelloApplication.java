@@ -1,17 +1,13 @@
 package com.example.sudokusolver;
 
-import com.example.sudokusolver.components.SquareLabel;
 import com.example.sudokusolver.components.SudokuGridPane;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -20,7 +16,6 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     SudokuGridPane boardGrid = new SudokuGridPane(9);
-    SquareLabel selectedSquare = null;
     GridPane rootGrid = new GridPane();
     Button clearBtn = new Button("Clear");
     Button solveBtn = new Button("Solve");
@@ -29,7 +24,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
 
         solveBtn.setPrefSize(100, 30);
-        solveBtn.setOnAction(e -> {
+        solveBtn.setOnAction(_ -> {
             boardGrid.solveSudoku();
             boardGrid.renderSolvedBoard();
             showClearBtn(true);
@@ -37,7 +32,7 @@ public class HelloApplication extends Application {
 
         ChoiceBox<String> sizeSelector = new ChoiceBox<>(FXCollections.observableArrayList("4 x 4", "9 x 9", "16 x 16"));
 
-        clearBtn.setOnAction(e -> {
+        clearBtn.setOnAction(_ -> {
             int size = boardGrid.getBoardSize();
             rootGrid.getChildren().remove(boardGrid);
             boardGrid = new SudokuGridPane(size);
