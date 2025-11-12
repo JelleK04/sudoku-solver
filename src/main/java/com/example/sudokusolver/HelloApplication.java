@@ -3,6 +3,7 @@ package com.example.sudokusolver;
 import com.example.sudokusolver.components.SudokuGridPane;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -16,7 +17,8 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     SudokuGridPane boardGrid = new SudokuGridPane(9);
-    GridPane rootGrid = new GridPane();
+    HBox root = new HBox();
+    VBox rightVBox = new VBox();
     Button clearBtn = new Button("Clear");
     Button solveBtn = new Button("Solve");
 
@@ -33,10 +35,7 @@ public class HelloApplication extends Application {
         ChoiceBox<String> sizeSelector = new ChoiceBox<>(FXCollections.observableArrayList("4 x 4", "9 x 9", "16 x 16"));
 
         clearBtn.setOnAction(_ -> {
-            int size = boardGrid.getBoardSize();
-            rootGrid.getChildren().remove(boardGrid);
-            boardGrid = new SudokuGridPane(size);
-            rootGrid.add(boardGrid, 0, 0, 2, 3);
+            boardGrid.clear();
             showClearBtn(false);
             solveBtn.setDisable(false);
         });
@@ -46,29 +45,27 @@ public class HelloApplication extends Application {
 
         sizeSelector.getSelectionModel().select(1);
         sizeSelector.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            rootGrid.getChildren().remove(boardGrid);
+            root.getChildren().remove(boardGrid);
             int size = 9;
             switch ((int) newValue) {
                 case 0 -> size = 4;
-                case 1 -> size = 9;
                 case 2 -> size = 16;
             }
             boardGrid = new SudokuGridPane(size);
-            rootGrid.add(boardGrid, 0, 0, 2, 3);
+            root.getChildren().add(boardGrid);
             System.out.println("BoardSize: " + size);
+            showClearBtn(false);
         });
 
+        rightVBox.getChildren().addAll(sizeLbl, sizeSelector, solveBtn);
+        rightVBox.setAlignment(Pos.TOP_LEFT);
+        root.getChildren().add(boardGrid);
+        root.getChildren().add(rightVBox);
 
-        rootGrid.add(boardGrid, 0, 0, 2, 3);
-        rootGrid.add(sizeLbl, 3, 0);
-        rootGrid.add(sizeSelector, 4, 0);
-        rootGrid.add(solveBtn, 4, 1);
 
-
-        Scene scene = new Scene(rootGrid);
+        Scene scene = new Scene(root);
 
         scene.setOnKeyTyped(e -> boardGrid.setSquareValue(e));
-
         stage.setScene(scene);
         stage.setTitle("Sudoku Solver");
         stage.setWidth(1000);
@@ -79,9 +76,9 @@ public class HelloApplication extends Application {
     private void showClearBtn(boolean showBtn) {
         if (showBtn) {
             solveBtn.setDisable(true);
-            rootGrid.add(clearBtn, 5, 1);
+            rightVBox.getChildren().add(clearBtn);
         } else {
-            rootGrid.getChildren().remove(clearBtn);
+            rightVBox.getChildren().remove(clearBtn);
             solveBtn.setDisable(false);
         }
     }

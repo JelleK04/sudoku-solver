@@ -82,7 +82,7 @@ public class Sudoku {
         }
 
         if (this.getValue(x,y) != 0) {
-            return this.solve(x + 1,y);
+            return this.solve(x + 1, y);
         }
         for (int i = 1; i <= boardSize; i++) {
             if (this.isSafe(x, y, i)) {
