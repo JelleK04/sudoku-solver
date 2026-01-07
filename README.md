@@ -7,4 +7,4 @@ It uses a standard backtracking algorithm and was built using the Liberica Full 
 
 In order to run the program you need to have the JavaFX module installed. The easiest way to do this is to download the Liberica Full 24 jdk from the Bellsoft website. See https://bell-sw.com/pages/downloads/#jdk-25-lts
 
-Alternatively you can download JavaFX seperately from the GluonHQ website. see: https://openjfx.io/openjfx-docs/
+Alternatively you can download JavaFX seperately from the GluonHQ website. See: https://openjfx.io/openjfx-docs/
