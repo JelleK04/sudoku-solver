@@ -13,6 +13,15 @@ public class Sudoku {
         this.regionSize = (int) Math.sqrt(boardSize);
     }
 
+    public boolean isEmpty() {
+        for (int val : this.numbers) {
+            if (val != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public int getBoardSize() {
         return this.boardSize;
     }
@@ -68,7 +77,11 @@ public class Sudoku {
     }
 
     public void solve() {
+        long startTime = System.nanoTime();
         this.solve(0, 0);
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        System.out.println("time taken: " + (endTime - startTime) + " nanoseconds or " + (duration/1000000) + " milliseconds");
     }
 
     //function that recursively solves sudoku

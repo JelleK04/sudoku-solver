@@ -9,37 +9,24 @@ import javafx.scene.text.Font;
 public class SquareLabel extends Label {
     private final int x;
     private final int y;
+    private int boardSize;
 
     private boolean isSelected;
 
     private final static Border blackBorder = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(2)));
     private final static Border redBorder = new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(2)));
 
-    public SquareLabel(int x, int y) {
+    public SquareLabel(int x, int y, int boardSize) {
         this.x = x;
         this.y = y;
-
+        this.boardSize = boardSize;
         this.setSelected(false);
 
         setPrefSize(50, 50);
         setFont(Font.font("Arial", 24));
         setAlignment(Pos.CENTER);
-
-
-
-//        if (x % 3 == 0 && y % 3 == 0)
-//            setBorder(new Border(new BorderStroke(null, null, null, BorderStroke.THICK), new BorderStroke(null, null, null, BorderStroke.THIN), new BorderStroke(null, null, null, BorderStroke.THIN), new BorderStroke(null, null, null, BorderStroke.THIN)));
-//        if (x % 3 == 0)
-//            setBorder(new Border(new BorderStroke(null, null, null, BorderStroke.THICK), new BorderStroke(null, null, null, BorderStroke.THIN), new BorderStroke(null, null, null, BorderStroke.THIN), new BorderStroke(null, null, null, BorderStroke.THIN)));
-//        else if (y % 3 == 0)
-//            setBorder(new Border(new BorderStroke(null, null, null, BorderStroke.THIN), new BorderStroke(null, null, null, BorderStroke.THICK), new BorderStroke(null, null, null, BorderStroke.THIN), new BorderStroke(null, null, null, BorderStroke.THIN)));
-//        else
-//            setBorder(new Border(new BorderStroke(null, null, null, null)));
-       }
-
-    public SquareLabel() {
-        this(-1, -1);
     }
+
 
     public int getX() {
         return this.x;
@@ -51,11 +38,33 @@ public class SquareLabel extends Label {
 
     public void setSelected(boolean isSelected) {
         this.isSelected = isSelected;
-        this.setBorder(this.isSelected ? redBorder : blackBorder);
+        this.setBorder(createCellBorder(y, x, isSelected, boardSize));
     }
 
     public boolean getSelected() {
         return this.isSelected;
+    }
+
+    public static Border createCellBorder(int row, int col, boolean isSelected, int boardSize) {
+        BorderStrokeStyle style = BorderStrokeStyle.SOLID;
+        Color color = (isSelected) ? Color.RED : Color.BLACK;
+        ;
+
+        double thin = 1;
+        double thick = 3;
+        int regionSize = (int) Math.sqrt(boardSize);
+        return new Border(new BorderStroke(
+                color, color, color, color,
+                style, style, style, style,
+                CornerRadii.EMPTY,
+                new BorderWidths(
+                        (isSelected) ? thick : (row % regionSize == 0) ? thick : thin, //top
+                        (isSelected) ? thick : (col % regionSize == (regionSize - 1)) ? thick : thin, //right
+                        (isSelected) ? thick :(row == (boardSize - 1)) ? thick : ((row % regionSize == (regionSize - 1)) ? thick : thin), //bottom
+                        (isSelected) ? thick : (col % regionSize == 0) ? thick : thin //left
+                ),
+                null
+        ));
     }
 }
 

@@ -3,6 +3,7 @@ package com.example.sudokusolver;
 import com.example.sudokusolver.components.SudokuGridPane;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,15 +30,16 @@ public class HelloApplication extends Application {
         solveBtn.setOnAction(_ -> {
             boardGrid.solveSudoku();
             boardGrid.renderSolvedBoard();
-            showClearBtn(true);
+            solveBtn.setDisable(true);
+            clearBtn.setDisable(false);
         });
 
         ChoiceBox<String> sizeSelector = new ChoiceBox<>(FXCollections.observableArrayList("4 x 4", "9 x 9", "16 x 16"));
 
         clearBtn.setOnAction(_ -> {
             boardGrid.clear();
-            showClearBtn(false);
             solveBtn.setDisable(false);
+            clearBtn.setDisable(true);
         });
 
         Label sizeLbl = new Label("Size:");
@@ -45,41 +47,42 @@ public class HelloApplication extends Application {
 
         sizeSelector.getSelectionModel().select(1);
         sizeSelector.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            root.getChildren().remove(boardGrid);
             int size = 9;
             switch ((int) newValue) {
                 case 0 -> size = 4;
                 case 2 -> size = 16;
             }
-            boardGrid = new SudokuGridPane(size);
-            root.getChildren().add(boardGrid);
+            boardGrid.changeSize(size);
+            solveBtn.setDisable(false);
             System.out.println("BoardSize: " + size);
-            showClearBtn(false);
+            if (size == 16) {
+                System.out.println("Maximize!");
+                stage.setMaximized(true);
+            } else {
+                stage.setMaximized(false);
+                stage.setHeight(size * 52 + 50);
+                stage.setWidth(size * 55 + 120);
+            }
         });
 
         rightVBox.getChildren().addAll(sizeLbl, sizeSelector, solveBtn);
+        rightVBox.getChildren().add(clearBtn);
         rightVBox.setAlignment(Pos.TOP_LEFT);
         root.getChildren().add(boardGrid);
         root.getChildren().add(rightVBox);
-
+        root.setSpacing(10);
+        HBox.setMargin(boardGrid, new Insets(5, 0, 0, 5));
+        VBox.setMargin(sizeSelector, new Insets(0, 0,10, 0));
+        VBox.setMargin(solveBtn, new Insets(0, 0,5, 0));
+        clearBtn.setDisable(true);
 
         Scene scene = new Scene(root);
 
-        scene.setOnKeyTyped(e -> boardGrid.setSquareValue(e));
+        scene.setOnKeyTyped(e -> {boardGrid.setSquareValue(e); if (!boardGrid.isEmpty()){clearBtn.setDisable(false);}});
         stage.setScene(scene);
         stage.setTitle("Sudoku Solver");
         stage.setWidth(1000);
         stage.setHeight(600);
         stage.show();
-
-    }
-    private void showClearBtn(boolean showBtn) {
-        if (showBtn) {
-            solveBtn.setDisable(true);
-            rightVBox.getChildren().add(clearBtn);
-        } else {
-            rightVBox.getChildren().remove(clearBtn);
-            solveBtn.setDisable(false);
-        }
     }
 }

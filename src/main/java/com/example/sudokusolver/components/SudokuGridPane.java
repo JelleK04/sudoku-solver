@@ -11,11 +11,14 @@ import javafx.scene.text.Font;
 public class SudokuGridPane extends Pane {
     private GridPane grid;
     private Sudoku sudoku;
-    private Border selectedBorder;
     private int selectedIndex;
 
     public SudokuGridPane(int boardSize) {
         this.build(boardSize);
+    }
+
+    public boolean isEmpty() {
+        return this.sudoku.isEmpty();
     }
 
     public int getBoardSize() {
@@ -35,7 +38,7 @@ public class SudokuGridPane extends Pane {
                 newLabel.setAlignment(Pos.CENTER);
                 newLabel.setFont(new Font("Arial", 24));
                 newLabel.setPrefSize(48, 48);
-                newLabel.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(2))));
+                newLabel.setBorder(SquareLabel.createCellBorder(y, x, false, this.getBoardSize()));
                 this.grid.add(newLabel, x, y);
             }
         }
@@ -77,13 +80,14 @@ public class SudokuGridPane extends Pane {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 final int index = j + i * boardSize;
-                SquareLabel square = new SquareLabel(j, i);
+                SquareLabel square = new SquareLabel(j, i, this.getBoardSize());
                 square.setPrefSize(48, 48);
                 square.setFont(new Font("Arial", 24));
                 square.setText("");
+                square.setBorder( SquareLabel.createCellBorder(i, j, false, this.getBoardSize()));
                 square.setOnMouseClicked(_ -> {
                     if (((SquareLabel) this.grid.getChildren().get(index)).getSelected()) {
-                        ((SquareLabel) this.grid.getChildren().get(selectedIndex)).setSelected(false);
+                        ((SquareLabel) this.grid.getChildren().get(index)).setSelected(false);
                     } else {
                         ((SquareLabel) this.grid.getChildren().get(selectedIndex)).setSelected(false);
                         selectedIndex = index;
@@ -93,7 +97,12 @@ public class SudokuGridPane extends Pane {
                 this.grid.add(square, j, i);
             }
         }
+        this.getChildren().add(this.grid);
+    }
 
-        getChildren().add(this.grid);
+    public void changeSize(int newSize) {
+        this.getChildren().clear();
+        this.selectedIndex = 0;
+        this.build(newSize);
     }
 }
