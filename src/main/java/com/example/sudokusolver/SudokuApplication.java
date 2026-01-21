@@ -2,7 +2,6 @@ package com.example.sudokusolver;
 
 import com.example.sudokusolver.components.SudokuGridPane;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
