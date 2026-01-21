@@ -1,6 +1,5 @@
 package com.example.sudokusolver;
 
-import java.util.Arrays;
 
 public class Sudoku {
     private int boardSize;
@@ -81,7 +80,7 @@ public class Sudoku {
         this.solve(0, 0);
         long endTime = System.nanoTime();
         long duration = endTime - startTime;
-        System.out.println("time taken: " + (endTime - startTime) + " nanoseconds or " + (duration/1000000) + " milliseconds");
+        System.out.println("time taken: " + duration + " nanoseconds or " + (duration/1000000) + " milliseconds");
     }
 
     //function that recursively solves sudoku
@@ -90,8 +89,7 @@ public class Sudoku {
             return true;
         }
         if (x == boardSize) {
-            x = 0;
-            y++;
+            return solve(0, y + 1);
         }
 
         if (this.getValue(x,y) != 0) {
@@ -107,10 +105,6 @@ public class Sudoku {
             }
         }
         return false;
-    }
-
-    public void clear() {
-        Arrays.fill(this.numbers, 0);
     }
 }
 

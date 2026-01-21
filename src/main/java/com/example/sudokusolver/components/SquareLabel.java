@@ -10,11 +10,7 @@ public class SquareLabel extends Label {
     private final int x;
     private final int y;
     private int boardSize;
-
     private boolean isSelected;
-
-    private final static Border blackBorder = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(2)));
-    private final static Border redBorder = new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(2)));
 
     public SquareLabel(int x, int y, int boardSize) {
         this.x = x;
@@ -48,7 +44,6 @@ public class SquareLabel extends Label {
     public static Border createCellBorder(int row, int col, boolean isSelected, int boardSize) {
         BorderStrokeStyle style = BorderStrokeStyle.SOLID;
         Color color = (isSelected) ? Color.RED : Color.BLACK;
-        ;
 
         double thin = 1;
         double thick = 3;

@@ -2,7 +2,9 @@ package com.example.sudokusolver;
 
 import com.example.sudokusolver.components.SudokuGridPane;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,10 +15,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
-
-public class HelloApplication extends Application {
+public class SudokuApplication extends Application {
     SudokuGridPane boardGrid = new SudokuGridPane(9);
     HBox root = new HBox();
     VBox rightVBox = new VBox();
@@ -24,14 +24,24 @@ public class HelloApplication extends Application {
     Button solveBtn = new Button("Solve");
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
 
         solveBtn.setPrefSize(100, 30);
         solveBtn.setOnAction(_ -> {
-            boardGrid.solveSudoku();
-            boardGrid.renderSolvedBoard();
             solveBtn.setDisable(true);
-            clearBtn.setDisable(false);
+
+            Task<Void> solveTask = new Task() {
+                @Override
+                protected Void call() {
+                    boardGrid.solveSudoku();
+                    return null;
+                }
+            };
+
+            solveTask.setOnSucceeded(e -> {
+                boardGrid.renderSolvedBoard();
+                clearBtn.setDisable(false);
+            });
         });
 
         ChoiceBox<String> sizeSelector = new ChoiceBox<>(FXCollections.observableArrayList("4 x 4", "9 x 9", "16 x 16"));
@@ -59,9 +69,8 @@ public class HelloApplication extends Application {
                 System.out.println("Maximize!");
                 stage.setMaximized(true);
             } else {
-                stage.setMaximized(false);
-                stage.setHeight(size * 52 + 50);
-                stage.setWidth(size * 55 + 120);
+                stage.setMinHeight(size * 52 + 50);
+                stage.setMinWidth(size * 55 + 120);
             }
         });
 
@@ -81,6 +90,8 @@ public class HelloApplication extends Application {
         scene.setOnKeyTyped(e -> {boardGrid.setSquareValue(e); if (!boardGrid.isEmpty()){clearBtn.setDisable(false);}});
         stage.setScene(scene);
         stage.setTitle("Sudoku Solver");
+        stage.setMinWidth(500);
+        stage.setMinHeight(300);
         stage.setWidth(1000);
         stage.setHeight(600);
         stage.show();
