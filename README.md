@@ -1,12 +1,12 @@
 # sudoku-solver
 ![image of the programs user interface](https://github.com/JelleK04/sudoku-solver/blob/main/SudokuSolverGUI.png)
 
-A program build using Java and JavaFx that is able to solve sudokus. The user can enter almost any (for exceptions, see [known bugs](#known%20bugs)) starting state of the sudoku grid and the program will return a solved sudoku.
+A program build using Java and JavaFx that is able to solve sudokus. The user can enter almost any (for exceptions, see [known bugs](#known-bugs)) starting state of the sudoku grid and the program will return a solved sudoku.
 It uses a backtracking algorithm and was built using the Liberica Full 24 jdk.
 
-* [Installation](#Installation%20guide)
+* [Installation](#installation-guide)
 * How to use
-* [Bugs](#Known%20bugs)
+* Bugs
 
 ## Installation guide
 
