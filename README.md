@@ -13,15 +13,19 @@ It uses a backtracking algorithm and was built using the Liberica Full 24 jdk.
 In order to run the program you need to have the JavaFX module installed. There are two ways to do this. The easiest way to do get JavaFX is to download the Liberica Full 24 jdk through your IDE.
 
 ### Install JavaFX through IntelliJ IDE
-First, go to the Project Structure menu.
+
+#### Step 1
+Go to the Project Structure menu.
 
 ![Project Structure](https://github.com/JelleK04/sudoku-solver/blob/main/images/ProjectStructureButton.png)     
 
-There you will find the "project" tab. Here you select the SDK dropdown menu and select "Download JDK".
+#### Step 2
+Under the "Project" tab, open the "SDK" dropdown menu and select "Download JDK".
 
 ![Button to press to download JDKs](https://github.com/JelleK04/sudoku-solver/blob/main/images/DownloadJDKButton.png)    
 
-Then select "Bellsoft Liberica JDK (full)" and press download.
+#### Step 3
+Select "Bellsoft Liberica JDK (full)" and press download.
 
 ![The JDK that should be installed](https://github.com/JelleK04/sudoku-solver/blob/main/images/JDKToDownload.png)    
 
